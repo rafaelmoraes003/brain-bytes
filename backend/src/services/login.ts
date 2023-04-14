@@ -37,7 +37,6 @@ class LoginService {
 
     return { code: HTTPCodes.OK, data: token };
   }
-
 }
 
 export default LoginService;

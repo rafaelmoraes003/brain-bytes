@@ -9,5 +9,16 @@ class LoginRoute extends Route {
   constructor(loginController: LoginController) {
     super();
     this._loginController = loginController;
+    this.setRoutes();
+  }
+
+  public setRoutes(): void {
+    this.routes.post('/', this._loginController.login);
   }
 }
+
+const loginService: LoginService = new LoginService(User);
+const loginController: LoginController = new LoginController(loginService);
+const loginRoute: LoginRoute = new LoginRoute(loginController);
+
+export default loginRoute;

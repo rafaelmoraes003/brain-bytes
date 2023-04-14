@@ -29,6 +29,10 @@ class App {
     this.app.use(errorHandler);
   }
 
+  public async start(PORT: number): Promise<void> {
+    this.app.listen(PORT, (): void => console.log(`Running at port ${PORT}`));
+  }
+
 }
 
 export const { app } = new App();

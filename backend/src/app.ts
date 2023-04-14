@@ -3,6 +3,7 @@ import cors from 'cors';
 import HTTPCodes from './enum/HTTPCodes';
 import errorHandler from './middlewares/erroHandler';
 import loginRoute from './routes/login';
+import connectToDatabase from './models/connection';
 
 class App {
   public app: Express;
@@ -33,7 +34,16 @@ class App {
   }
 
   public async start(PORT: number): Promise<void> {
-    this.app.listen(PORT, (): void => console.log(`Running at port ${PORT}`));
+    try {
+      await connectToDatabase();
+      this.app.listen(PORT, (): void => console.log(`Running at port ${PORT}`));
+    } catch (err: unknown) {
+      const error = err as Error;
+      console.log('Connection with database generated an error:\r\n');
+      console.error(error.message);
+      console.log('\r\nServer initialization cancelled');
+      process.exit(0);
+    }
   }
 }
 

@@ -36,6 +36,15 @@ class UserService {
     const token: string = createJWT(newUser);
     return { code: HTTPCodes.CREATED, data: token };
   }
+
+  public async getById(_id: string): Promise<ServiceResponse<UserDocument>> {
+    const user: UserDocument | null = await this._userModel.findOne({ _id });
+    if (!user) {
+      throw new CustomError('user not found.', HTTPCodes.NOT_FOUND);
+    }
+    return { code: HTTPCodes.OK, data: user };
+  }
+
 }
 
 export default UserService;

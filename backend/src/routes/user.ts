@@ -10,6 +10,11 @@ class UserRoute extends Route {
     super();
     this._userController = userController;
 
+    this.setRoutes();
+  }
+
+  public setRoutes(): void {
+    this.routes.post('/', this._userController.create);
   }
 }
 

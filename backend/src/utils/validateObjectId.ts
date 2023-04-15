@@ -9,6 +9,6 @@ const validateObjectId = (_id: string): void => {
       HTTPCodes.BAD_REQUEST,
     );
   }
-}
+};
 
 export default validateObjectId;

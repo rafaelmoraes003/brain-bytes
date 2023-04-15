@@ -15,6 +15,7 @@ class UserRoute extends Route {
 
   public setRoutes(): void {
     this.routes.post('/', this._userController.create);
+    this.routes.delete('/:_id', this._userController.delete);
   }
 }
 

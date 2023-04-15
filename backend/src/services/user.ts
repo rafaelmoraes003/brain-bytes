@@ -17,6 +17,25 @@ class UserService {
     this._userModel = userModel;
   }
 
+  public async create(userBody: IUser): Promise<ServiceResponse<string>> {
+    validateBody(userSchema, userBody);
+
+    const { username, password } = userBody;
+
+    const user: UserDocument | null = await this._userModel.findOne({ username });
+
+    if (user) {
+      throw new CustomError('user already exists', HTTPCodes.BAD_REQUEST);
+    }
+
+    const excryptedPassword: string = getHash(password);
+
+    const newUser: UserDocument = await this._userModel
+      .create({ username, password: excryptedPassword, coins: 10 });
+
+    const token: string = createJWT(newUser);
+    return { code: HTTPCodes.CREATED, data: token };
+  }
 }
 
 export default UserService;

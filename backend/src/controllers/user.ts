@@ -8,6 +8,16 @@ class UserController {
   constructor(userService: UserService) {
     this._userService = userService;
 
+    this.create = this.create.bind(this);
+  }
+
+  public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { code, data } = await this._userService.create(req.body as IUser);
+      res.status(code).json({ token: data });
+    } catch (error: unknown) {
+      next(error);
+    }
   }
 }
 

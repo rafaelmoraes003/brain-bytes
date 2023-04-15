@@ -1,8 +1,8 @@
 import HTTPCodes from '../enum/HTTPCodes';
 
-interface ServiceResponse<T> {
+interface ServiceResponse<T = undefined> {
   code: HTTPCodes,
-  data: T,
+  data?: T,
 }
 
 export default ServiceResponse;

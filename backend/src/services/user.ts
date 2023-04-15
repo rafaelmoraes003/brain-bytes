@@ -45,6 +45,12 @@ class UserService {
     return { code: HTTPCodes.OK, data: user };
   }
 
+  public async delete(_id: string): Promise<ServiceResponse> {
+    validateObjectId(_id);
+    await this.getById(_id);
+    await this._userModel.deleteOne({ _id });
+    return { code: HTTPCodes.SUCCESS_NO_CONTENT };
+  }
 }
 
 export default UserService;

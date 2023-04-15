@@ -3,6 +3,7 @@ import cors from 'cors';
 import HTTPCodes from './enum/HTTPCodes';
 import errorHandler from './middlewares/erroHandler';
 import loginRoute from './routes/login';
+import userRoute from './routes/user';
 import connectToDatabase from './models/connection';
 
 class App {
@@ -18,7 +19,6 @@ class App {
   private config(): void {
     this.app.use(express.json());
     this.app.use(cors());
-    this.setApplicationRoutes();
   }
 
   private setApplicationRoutes(): void {
@@ -27,6 +27,7 @@ class App {
     });
 
     this.app.use('/login', loginRoute.routes);
+    this.app.use('/user', userRoute.routes);
   }
 
   private setErrorMiddleware(): void {

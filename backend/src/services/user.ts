@@ -9,6 +9,7 @@ import getHash from '../utils/getHash';
 import createJWT from '../utils/createJWT';
 import ServiceResponse from '../interfaces/ServiceResponse';
 import validateObjectId from '../utils/validateObjectId';
+import validateUser from '../utils/validateUser';
 
 class UserService {
   private _userModel: Model<IUser>;
@@ -31,7 +32,7 @@ class UserService {
     const excryptedPassword: string = getHash(password);
 
     const newUser: UserDocument = await this._userModel
-      .create({ username, password: excryptedPassword, coins: 10 });
+      .create({ username, password: excryptedPassword });
 
     const token: string = createJWT(newUser);
     return { code: HTTPCodes.CREATED, data: token };
@@ -45,8 +46,9 @@ class UserService {
     return { code: HTTPCodes.OK, data: user };
   }
 
-  public async delete(_id: string): Promise<ServiceResponse> {
+  public async delete(_id: string, userId: string): Promise<ServiceResponse> {
     validateObjectId(_id);
+    validateUser(_id, userId);
     await this.getById(_id);
     await this._userModel.deleteOne({ _id });
     return { code: HTTPCodes.SUCCESS_NO_CONTENT };

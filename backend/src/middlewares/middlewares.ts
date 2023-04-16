@@ -6,7 +6,6 @@ import AuthRequest from '../interfaces/AuthRequest';
 import IUser from '../interfaces/IUser';
 
 class Middlewares {
-
   public static errorHandler(
     err: CustomError,
     _req: Request,
@@ -20,14 +19,14 @@ class Middlewares {
     const { message, statusCode } = err;
 
     res.status(statusCode).json({ error: message });
-  };
+  }
 
   public static auth(req: AuthRequest, res: Response, next: NextFunction): void {
     const { authorization: token } = req.headers;
     const JWT_SECRET: string = process.env.JWT_SECRET as string;
 
     if (!token) {
-      throw new CustomError("token not found.", HTTPCodes.NOT_FOUND);
+      throw new CustomError('token not found.', HTTPCodes.NOT_FOUND);
     }
 
     try {

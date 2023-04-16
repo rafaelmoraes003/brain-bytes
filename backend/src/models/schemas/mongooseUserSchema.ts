@@ -18,7 +18,7 @@ const mongooseUserSchema: Schema<IUser> = new Schema<IUser>({
   availableCategories: {
     type: [String],
     required: true,
-    default: ["node.js", "react", "python"],
+    default: ['node.js', 'react', 'python'],
   },
 }, {
   versionKey: false,

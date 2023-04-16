@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/user';
 import IUser from '../interfaces/IUser';
+import AuthRequest from '../interfaces/AuthRequest';
 
 class UserController {
   private _userService: UserService;
@@ -21,10 +22,10 @@ class UserController {
     }
   }
 
-  public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public async delete(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const { _id } = req.params;
-      const { code } = await this._userService.delete(_id);
+      const { code } = await this._userService.delete(_id, req._id as string);
       res.status(code).end();
     } catch (error: unknown) {
       next(error);

@@ -1,10 +1,10 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import HTTPCodes from './enum/HTTPCodes';
-import errorHandler from './middlewares/errorHandler';
 import loginRoute from './routes/login';
 import userRoute from './routes/user';
 import connectToDatabase from './models/connection';
+import Middlewares from './middlewares/middlewares';
 
 class App {
   public app: Express;
@@ -31,7 +31,7 @@ class App {
   }
 
   private setErrorMiddleware(): void {
-    this.app.use(errorHandler);
+    this.app.use(Middlewares.errorHandler);
   }
 
   public async start(PORT: number): Promise<void> {

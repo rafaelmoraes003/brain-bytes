@@ -1,4 +1,5 @@
 import UserController from '../controllers/user';
+import Middlewares from '../middlewares/middlewares';
 import User from '../models/user';
 import UserService from '../services/user';
 import Route from './route';
@@ -15,6 +16,9 @@ class UserRoute extends Route {
 
   public setRoutes(): void {
     this.routes.post('/', this._userController.create);
+
+    this.routes.use(Middlewares.auth);
+
     this.routes.delete('/:_id', this._userController.delete);
   }
 }

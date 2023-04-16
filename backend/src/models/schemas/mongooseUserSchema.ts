@@ -10,8 +10,15 @@ const mongooseUserSchema: Schema<IUser> = new Schema<IUser>({
     type: String,
     required: true,
   },
-  coins: {
+  bytes: {
     type: Number,
+    required: true,
+    default: 10,
+  },
+  availableCategories: {
+    type: [String],
+    required: true,
+    default: ["node.js", "react", "python"],
   },
 }, {
   versionKey: false,

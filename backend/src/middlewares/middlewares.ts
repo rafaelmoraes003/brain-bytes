@@ -21,6 +21,23 @@ class Middlewares {
 
     res.status(statusCode).json({ error: message });
   };
+
+  public static auth(req: AuthRequest, res: Response, next: NextFunction): void {
+    const { authorization: token } = req.headers;
+    const JWT_SECRET: string = process.env.JWT_SECRET as string;
+
+    if (!token) {
+      throw new CustomError("token not found.", HTTPCodes.NOT_FOUND);
+    }
+
+    try {
+      const { _id } = jwt.verify(token, JWT_SECRET) as IUser;
+      req._id = _id;
+      next();
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
 }
 
 export default Middlewares;

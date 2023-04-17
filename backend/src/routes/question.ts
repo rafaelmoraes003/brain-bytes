@@ -18,6 +18,7 @@ class QuestionRoute extends Route {
     this.routes.use(Middlewares.auth);
 
     this.routes.get('/', this._questionController.getAll);
+    this.routes.get('/:category', this._questionController.getByCategory);
   }
 }
 

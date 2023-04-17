@@ -24,7 +24,7 @@ const mongooseUserSchema: Schema<IUser> = new Schema<IUser>({
     type: Boolean,
     required: true,
     default: false,
-  }
+  },
 }, {
   versionKey: false,
 });

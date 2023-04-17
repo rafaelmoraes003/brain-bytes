@@ -1,7 +1,9 @@
 import { Request } from 'express';
+import { ObjectId } from 'mongoose';
 
 interface AuthRequest extends Request {
-  _id?: string,
+  _id?: ObjectId,
+  isAdmin?: boolean
 }
 
 export default AuthRequest;

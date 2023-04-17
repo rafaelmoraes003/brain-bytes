@@ -3,6 +3,7 @@ import cors from 'cors';
 import HTTPCodes from './enum/HTTPCodes';
 import loginRoute from './routes/login';
 import userRoute from './routes/user';
+import questionRoute from './routes/question';
 import connectToDatabase from './models/connection';
 import Middlewares from './middlewares/middlewares';
 
@@ -28,6 +29,7 @@ class App {
 
     this.app.use('/login', loginRoute.routes);
     this.app.use('/user', userRoute.routes);
+    this.app.use('/questions', questionRoute.routes);
   }
 
   private setErrorMiddleware(): void {

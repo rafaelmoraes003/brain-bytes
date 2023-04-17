@@ -9,6 +9,7 @@ import getHash from '../utils/getHash';
 import createJWT from '../utils/createJWT';
 import ServiceResponse from '../interfaces/ServiceResponse';
 import validateObjectId from '../utils/validateObjectId';
+import availableExtraCategories from '../utils/availableExtraCategories';
 
 class UserService {
   private _userModel: Model<IUser>;
@@ -51,6 +52,16 @@ class UserService {
     await this._userModel.deleteOne({ _id });
     return { code: HTTPCodes.SUCCESS_NO_CONTENT };
   }
+
+  public async addBytes(_id: ObjectId, bytes: number): Promise<ServiceResponse> {
+    await this._userModel.updateOne(
+      { _id },
+      { $inc: { bytes } },
+    );
+
+    return { code: HTTPCodes.SUCCESS_NO_CONTENT }
+  }
+
 }
 
 export default UserService;

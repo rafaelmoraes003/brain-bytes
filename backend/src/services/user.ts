@@ -53,16 +53,29 @@ class UserService {
     return { code: HTTPCodes.SUCCESS_NO_CONTENT };
   }
 
-  public async addBytes(_id: ObjectId, bytes: number): Promise<ServiceResponse> {
+  public async incrementBytes(_id: ObjectId, bytes: number): Promise<void> {
     await this._userModel.updateOne(
       { _id },
       { $inc: { bytes } },
     );
-
-    return { code: HTTPCodes.SUCCESS_NO_CONTENT }
   }
 
-  public async unlockCategory(_id: ObjectId, category: string): Promise<ServiceResponse> {
+  public async decrementBytes(_id: ObjectId, bytes: number): Promise<void> {
+    const updatedUser = await this._userModel.updateOne(
+      {
+        _id,
+        bytes: { $gte: bytes }
+      },
+      { $inc: { bytes: -bytes } },
+    );
+
+    if (!updatedUser.modifiedCount) {
+      throw new CustomError('you do not have enough bytes.', HTTPCodes.BAD_REQUEST);
+    }
+  }
+
+
+  public async addCategory(_id: ObjectId, category: string): Promise<ServiceResponse> {
     if (!availableExtraCategories.includes(category)) {
       throw new CustomError('category is not available.', HTTPCodes.BAD_REQUEST);
     }

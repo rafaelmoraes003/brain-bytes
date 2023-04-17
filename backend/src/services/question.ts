@@ -19,6 +19,14 @@ class QuestionService {
     return { code: HTTPCodes.OK, data: questions };
   }
 
+  public async getByCategory(category: string): Promise<ServiceResponse<QuestionDocument[]>> {
+    const questionsByCategory: QuestionDocument[] = await this._questionModel.aggregate([
+      { $match: { category } },
+      { $sample: { size: 5 } },
+    ]);
+
+    return { code: HTTPCodes.OK, data: questionsByCategory };
+  }
 }
 
 export default QuestionService;

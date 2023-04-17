@@ -14,6 +14,7 @@ class UserController {
     this.create = this.create.bind(this);
     this.deleteMe = this.deleteMe.bind(this);
     this.handleBytes = this.handleBytes.bind(this);
+    this.addCategory = this.addCategory.bind(this);
   }
 
   public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -50,6 +51,15 @@ class UserController {
     }
   }
 
+  public async addCategory(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { code } = await this._userService
+        .addCategory(req._id as ObjectId, req.body.category);
+      res.status(code).end();
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
 }
 
 export default UserController;

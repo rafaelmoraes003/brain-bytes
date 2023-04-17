@@ -1,8 +1,8 @@
-import { isValidObjectId } from 'mongoose';
+import { ObjectId, isValidObjectId } from 'mongoose';
 import CustomError from './CustomError';
 import HTTPCodes from '../enum/HTTPCodes';
 
-const validateObjectId = (_id: string): void => {
+const validateObjectId = (_id: ObjectId): void => {
   if (!isValidObjectId(_id)) {
     throw new CustomError(
       'Id must have 24 hexadecimal characters',

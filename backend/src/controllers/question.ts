@@ -11,6 +11,15 @@ class QuestionController {
 
   }
 
+  public async getAll(_req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const { code, data } = await this._questionService.getAll();
+      res.status(code).json(data);
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
+
 }
 
 export default QuestionController;

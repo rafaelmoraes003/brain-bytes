@@ -74,6 +74,19 @@ class UserService {
     }
   }
 
+  public async handleBytes(
+    _id: ObjectId,
+    operation: 'inc' | 'dec',
+    bytes: number
+  ): Promise<ServiceResponse> {
+    if (operation === 'inc') {
+      await this.incrementBytes(_id, bytes);
+    } else {
+      await this.decrementBytes(_id, bytes);
+    }
+
+    return { code: HTTPCodes.SUCCESS_NO_CONTENT };
+  }
 
   public async addCategory(_id: ObjectId, category: string): Promise<ServiceResponse> {
     if (!availableExtraCategories.includes(category)) {

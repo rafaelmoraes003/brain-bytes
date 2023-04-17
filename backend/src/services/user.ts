@@ -62,6 +62,18 @@ class UserService {
     return { code: HTTPCodes.SUCCESS_NO_CONTENT }
   }
 
+  public async unlockCategory(_id: ObjectId, category: string): Promise<ServiceResponse> {
+    if (!availableExtraCategories.includes(category)) {
+      throw new CustomError('category is not available.', HTTPCodes.BAD_REQUEST);
+    }
+
+    await this._userModel.updateOne(
+      { _id },
+      { $push: { availableCategories: category } }
+    );
+
+    return { code: HTTPCodes.SUCCESS_NO_CONTENT };
+  }
 }
 
 export default UserService;

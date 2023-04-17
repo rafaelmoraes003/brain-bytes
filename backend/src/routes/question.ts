@@ -19,6 +19,7 @@ class QuestionRoute extends Route {
 
     this.routes.get('/', this._questionController.getAll);
     this.routes.get('/:category', this._questionController.getByCategory);
+    this.routes.post('/', this._questionController.create);
   }
 }
 

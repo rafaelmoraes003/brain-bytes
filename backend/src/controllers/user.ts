@@ -3,6 +3,7 @@ import { ObjectId } from 'mongoose';
 import UserService from '../services/user';
 import IUser from '../interfaces/IUser';
 import AuthRequest from '../interfaces/AuthRequest';
+import HandleBytesParams from '../interfaces/HandleBytesParams';
 
 class UserController {
   private _userService: UserService;
@@ -12,6 +13,7 @@ class UserController {
 
     this.create = this.create.bind(this);
     this.deleteMe = this.deleteMe.bind(this);
+    this.handleBytes = this.handleBytes.bind(this);
   }
 
   public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -32,6 +34,22 @@ class UserController {
       next(error);
     }
   }
+
+  public async handleBytes(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    const { operation, value } = req.params as unknown as HandleBytesParams;
+    try {
+      const { code } = await this._userService
+        .handleBytes(
+          req._id as ObjectId,
+          operation,
+          Number(value)
+        );
+      res.status(code).end();
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
+
 }
 
 export default UserController;

@@ -11,6 +11,18 @@ class QuestionRoute extends Route {
     super();
     this._questionController = questionController;
 
+    this.setRoutes();
   }
 
+  public setRoutes(): void {
+    this.routes.use(Middlewares.auth);
+
+    this.routes.get('/', this._questionController.getAll);
+  }
 }
+
+const questionService: QuestionService = new QuestionService(Question);
+const questionController: QuestionController = new QuestionController(questionService);
+const questionRoute: QuestionRoute = new QuestionRoute(questionController);
+
+export default questionRoute;

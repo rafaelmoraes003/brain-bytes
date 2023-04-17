@@ -19,7 +19,7 @@ class UserRoute extends Route {
 
     this.routes.use(Middlewares.auth);
 
-    this.routes.delete('/:_id', this._userController.delete);
+    this.routes.delete('/me', this._userController.deleteMe);
   }
 }
 

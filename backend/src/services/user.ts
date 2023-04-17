@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import IUser from '../interfaces/IUser';
 import validateBody from '../utils/validateBody';
 import userSchema from '../validations/user';
@@ -9,7 +9,6 @@ import getHash from '../utils/getHash';
 import createJWT from '../utils/createJWT';
 import ServiceResponse from '../interfaces/ServiceResponse';
 import validateObjectId from '../utils/validateObjectId';
-import validateUser from '../utils/validateUser';
 
 class UserService {
   private _userModel: Model<IUser>;
@@ -38,7 +37,7 @@ class UserService {
     return { code: HTTPCodes.CREATED, data: token };
   }
 
-  public async getById(_id: string): Promise<ServiceResponse<UserDocument>> {
+  public async getById(_id: ObjectId): Promise<ServiceResponse<UserDocument>> {
     const user: UserDocument | null = await this._userModel.findOne({ _id });
     if (!user) {
       throw new CustomError('user not found.', HTTPCodes.NOT_FOUND);
@@ -46,9 +45,8 @@ class UserService {
     return { code: HTTPCodes.OK, data: user };
   }
 
-  public async delete(_id: string, userId: string): Promise<ServiceResponse> {
+  public async deleteMe(_id: ObjectId): Promise<ServiceResponse> {
     validateObjectId(_id);
-    validateUser(_id, userId);
     await this.getById(_id);
     await this._userModel.deleteOne({ _id });
     return { code: HTTPCodes.SUCCESS_NO_CONTENT };

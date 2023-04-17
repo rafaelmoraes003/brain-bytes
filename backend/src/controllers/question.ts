@@ -30,6 +30,16 @@ class QuestionController {
       next(error);
     }
   }
+
+  public async create(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const { code, data } = await this
+        ._questionService.create(req.isAdmin as boolean, req.body as IQuestion[]);
+      res.status(code).json({ message: data });
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
 }
 
 export default QuestionController;

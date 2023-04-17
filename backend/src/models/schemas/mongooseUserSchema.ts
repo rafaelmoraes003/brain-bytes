@@ -20,6 +20,11 @@ const mongooseUserSchema: Schema<IUser> = new Schema<IUser>({
     required: true,
     default: ['node.js', 'react', 'python'],
   },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false,
+  }
 }, {
   versionKey: false,
 });

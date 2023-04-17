@@ -43,7 +43,7 @@ class UserController {
         .handleBytes(
           req._id as ObjectId,
           operation,
-          Number(value)
+          Number(value),
         );
       res.status(code).end();
     } catch (error: unknown) {

@@ -64,7 +64,7 @@ class UserService {
     const updatedUser = await this._userModel.updateOne(
       {
         _id,
-        bytes: { $gte: bytes }
+        bytes: { $gte: bytes },
       },
       { $inc: { bytes: -bytes } },
     );
@@ -77,7 +77,7 @@ class UserService {
   public async handleBytes(
     _id: ObjectId,
     operation: 'inc' | 'dec',
-    bytes: number
+    bytes: number,
   ): Promise<ServiceResponse> {
     if (operation === 'inc') {
       await this.incrementBytes(_id, bytes);
@@ -95,7 +95,7 @@ class UserService {
 
     await this._userModel.updateOne(
       { _id },
-      { $push: { availableCategories: category } }
+      { $push: { availableCategories: category } },
     );
 
     return { code: HTTPCodes.SUCCESS_NO_CONTENT };

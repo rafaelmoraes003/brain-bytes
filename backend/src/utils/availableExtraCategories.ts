@@ -4,5 +4,4 @@ const availableExtraCategories: string[] = [
   'mysql',
 ];
 
-
 export default availableExtraCategories;

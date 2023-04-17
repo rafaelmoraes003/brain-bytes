@@ -1,9 +1,9 @@
 interface IUser {
-  _id?: string,
   username: string,
   password: string,
   bytes?: number,
-  availableCategories?: string[];
+  availableCategories?: string[],
+  isAdmin?: boolean,
 }
 
 export default IUser;

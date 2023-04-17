@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import CustomError from '../utils/CustomError';
 import HTTPCodes from '../enum/HTTPCodes';
 import AuthRequest from '../interfaces/AuthRequest';
-import IUser from '../interfaces/IUser';
+import UserDocument from '../interfaces/UserDocument';
 
 class Middlewares {
   public static errorHandler(
@@ -30,8 +30,9 @@ class Middlewares {
     }
 
     try {
-      const { _id } = jwt.verify(token, JWT_SECRET) as IUser;
+      const { _id, isAdmin } = jwt.verify(token, JWT_SECRET) as UserDocument;
       req._id = _id;
+      req.isAdmin = isAdmin;
       next();
     } catch (error: unknown) {
       next(error);

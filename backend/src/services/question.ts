@@ -27,6 +27,18 @@ class QuestionService {
 
     return { code: HTTPCodes.OK, data: questionsByCategory };
   }
+
+  public async create(isAdmin: boolean, questions: IQuestion[]): Promise<ServiceResponse<string>> {
+    if (!isAdmin) {
+      throw new CustomError(
+        'only admins can create new questions.',
+        HTTPCodes.UNAUTHORIZED,
+      );
+    }
+    validateBody(questionSchema, questions);
+    await this._questionModel.insertMany(questions);
+    return { code: HTTPCodes.CREATED, data: `${questions.length} question(s) created!` };
+  }
 }
 
 export default QuestionService;

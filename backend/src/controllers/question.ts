@@ -9,6 +9,9 @@ class QuestionController {
   constructor(questionService: QuestionService) {
     this._questionService = questionService;
 
+    this.getAll = this.getAll.bind(this);
+    this.getByCategory = this.getByCategory.bind(this);
+    this.create = this.create.bind(this);
   }
 
   public async getAll(_req: AuthRequest, res: Response, next: NextFunction) {

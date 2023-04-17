@@ -14,6 +14,11 @@ class QuestionService {
     this._questionModel = questionModel;
   }
 
+  public async getAll(): Promise<ServiceResponse<QuestionDocument[]>> {
+    const questions: QuestionDocument[] = await this._questionModel.find();
+    return { code: HTTPCodes.OK, data: questions };
+  }
+
 }
 
 export default QuestionService;

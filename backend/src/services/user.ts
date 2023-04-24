@@ -8,7 +8,6 @@ import CustomError from '../utils/CustomError';
 import getHash from '../utils/getHash';
 import createJWT from '../utils/createJWT';
 import ServiceResponse from '../interfaces/ServiceResponse';
-import validateObjectId from '../utils/validateObjectId';
 import availableExtraCategories from '../utils/availableExtraCategories';
 import HandleBytesParams from '../interfaces/HandleBytesParams';
 
@@ -48,7 +47,6 @@ class UserService {
   }
 
   public async deleteMe(_id: ObjectId): Promise<ServiceResponse> {
-    validateObjectId(_id);
     await this.getById(_id);
     await this._userModel.deleteOne({ _id });
     return { code: HTTPCodes.SUCCESS_NO_CONTENT };

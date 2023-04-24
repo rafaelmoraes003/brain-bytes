@@ -27,7 +27,7 @@ class UserService {
     const user: UserDocument | null = await this._userModel.findOne({ username });
 
     if (user) {
-      throw new CustomError('user already exists', HTTPCodes.BAD_REQUEST);
+      throw new CustomError('user already exists.', HTTPCodes.BAD_REQUEST);
     }
 
     const excryptedPassword: string = getHash(password);

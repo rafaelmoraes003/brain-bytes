@@ -8,6 +8,7 @@ import HTTPCodes from '../enum/HTTPCodes';
 import IQuestion from '../interfaces/IQuestion';
 import questions from './mocks/questions';
 import adminToken from './mocks/adminToken';
+import token from './mocks/token';
 
 chai.use(chaiHttp);
 
@@ -107,5 +108,55 @@ describe('GET /:category', () => {
       expect(response.body.error).to.be.equal('Error');
     });
   });
+});
 
+describe('POST /questions', () => {
+  describe('Success', () => {
+    before(() => {
+      sinon
+        .stub(Question, 'insertMany')
+        .resolves();
+    });
+
+    after(() => {
+      (Question.insertMany as sinon.SinonStub).restore();
+    });
+
+    it('Status 201 and created question message', async () => {
+      const response: Response = await chai
+        .request(app)
+        .post(questionsRoute)
+        .set('Authorization', adminToken)
+        .send([questions[0]]);
+
+      expect(response.status).to.be.equal(HTTPCodes.CREATED);
+      expect(response.body.message).to.be.equal('1 question(s) created!');
+    });
+  });
+
+  describe('Non admin trying to create questions', () => {
+    it('Status 401 and error message', async () => {
+      const response: Response = await chai
+        .request(app)
+        .post(questionsRoute)
+        .set('Authorization', token)
+        .send([questions[0]]);
+
+      expect(response.status).to.be.equal(HTTPCodes.UNAUTHORIZED);
+      expect(response.body.error).to.be.equal('only admins can create new questions.');
+    });
+  });
+
+  describe('Question with semantic error', () => {
+    it('Status 422 and error message', async () => {
+      const response: Response = await chai
+        .request(app)
+        .post(questionsRoute)
+        .set('Authorization', adminToken)
+        .send([{ ...questions[0], question: 1 }] as unknown as IQuestion);
+
+      expect(response.status).to.be.equal(HTTPCodes.SEMANTIC_ERROR);
+      expect(response.body.error).to.be.equal('0 - Expected string, received number');
+    });
+  });
 });

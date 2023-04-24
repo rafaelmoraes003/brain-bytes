@@ -1,5 +1,3 @@
-import { ObjectId } from "mongoose";
-
 interface IUser {
   username: string,
   password: string,

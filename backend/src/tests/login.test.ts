@@ -23,15 +23,14 @@ const userInDatabase: IUserMock = {
   _id: '643d6e83426e597b3ab16c52',
   username: 'rafael',
   password: '827ccb0eea8a706c4c34a16891f84e7b', // 12345
-}
-
+};
 
 describe('POST /login', () => {
   describe('Success', () => {
     before(() => {
       sinon
         .stub(User, 'findOne')
-        .resolves(userInDatabase)
+        .resolves(userInDatabase);
     });
 
     after(() => {
@@ -56,7 +55,7 @@ describe('POST /login', () => {
     before(() => {
       sinon
         .stub(User, 'findOne')
-        .resolves(null)
+        .resolves(null);
     });
 
     after(() => {
@@ -98,7 +97,7 @@ describe('POST /login', () => {
     before(() => {
       sinon
         .stub(User, 'findOne')
-        .resolves(userInDatabase)
+        .resolves(userInDatabase);
     });
 
     after(() => {

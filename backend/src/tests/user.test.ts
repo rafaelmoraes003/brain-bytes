@@ -2,6 +2,7 @@ import chai from 'chai';
 import sinon from 'sinon';
 import chaiHttp from 'chai-http';
 import { Response } from 'superagent';
+import { Types } from 'mongoose';
 import { app } from '../app';
 import User from '../models/user';
 import HTTPCodes from '../enum/HTTPCodes';
@@ -206,6 +207,110 @@ describe('DELETE /user/me', () => {
         .set('Authorization', token);
 
       expect(response.status).to.be.equal(HTTPCodes.SERVER_ERROR);
+    });
+  });
+});
+
+describe('PATCH /bytes', () => {
+  describe('Increment', () => {
+    before(() => {
+      sinon
+        .stub(User, 'updateOne')
+        .resolves();
+    });
+
+    after(() => {
+      (User.updateOne as sinon.SinonStub).restore();
+    });
+
+    it('Status 204', async () => {
+      const response: Response = await chai
+        .request(app)
+        .patch(`${userRoute}/bytes`)
+        .set('Authorization', token)
+        .send({
+          operation: 'inc',
+          bytes: 10,
+        });
+
+      expect(response.status).to.be.equal(HTTPCodes.SUCCESS_NO_CONTENT);
+    });
+  });
+
+  describe('Decrement', () => {
+    before(() => {
+      sinon
+        .stub(User, 'updateOne')
+        .resolves({
+          acknowledged: true,
+          modifiedCount: 1,
+          upsertedId: new Types.ObjectId(),
+          upsertedCount: 0,
+          matchedCount: 1,
+        });
+    });
+
+    after(() => {
+      (User.updateOne as sinon.SinonStub).restore();
+    });
+
+    it('Status 204', async () => {
+      const response: Response = await chai
+        .request(app)
+        .patch(`${userRoute}/bytes`)
+        .set('Authorization', token)
+        .send({
+          operation: 'dec',
+          bytes: 5,
+        });
+
+      expect(response.status).to.be.equal(HTTPCodes.SUCCESS_NO_CONTENT);
+    });
+  });
+
+  describe('Not enough bytes to decrement', () => {
+    before(() => {
+      sinon
+        .stub(User, 'updateOne')
+        .resolves({
+          acknowledged: true,
+          modifiedCount: 0,
+          upsertedId: new Types.ObjectId(),
+          upsertedCount: 0,
+          matchedCount: 0,
+        });
+    });
+
+    after(() => {
+      (User.updateOne as sinon.SinonStub).restore();
+    });
+
+    it('Status 400', async () => {
+      const response: Response = await chai
+        .request(app)
+        .patch(`${userRoute}/bytes`)
+        .set('Authorization', token)
+        .send({
+          operation: 'dec',
+          bytes: 20,
+        });
+
+      expect(response.status).to.be.equal(HTTPCodes.BAD_REQUEST);
+    });
+  });
+
+  describe('Invalid operation', () => {
+    it('Status 400', async () => {
+      const response: Response = await chai
+        .request(app)
+        .patch(`${userRoute}/bytes`)
+        .set('Authorization', token)
+        .send({
+          operation: 'yyy',
+          bytes: 20,
+        });
+
+      expect(response.status).to.be.equal(HTTPCodes.BAD_REQUEST);
     });
   });
 });

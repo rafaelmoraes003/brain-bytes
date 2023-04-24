@@ -19,9 +19,11 @@ class UserRoute extends Route {
 
     this.routes.use(Middlewares.auth);
 
+    this.routes.get('/me', this._userController.getById);
+
     this.routes.delete('/me', this._userController.deleteMe);
 
-    this.routes.patch('/bytes/:operation/:value', this._userController.handleBytes);
+    this.routes.patch('/bytes', this._userController.handleBytes);
     this.routes.patch('/category', this._userController.addCategory);
   }
 }

@@ -1,6 +1,6 @@
 interface HandleBytesParams {
-  operation: 'inc' | 'dec',
-  value: string,
+  operation: string,
+  value: number,
 }
 
 export default HandleBytesParams;

@@ -155,3 +155,57 @@ describe('GET users/me', () => {
     });
   });
 });
+
+describe('DELETE /user/me', () => {
+  describe('Success', () => {
+    before(() => {
+      sinon
+        .stub(User, 'findOne')
+        .resolves(mockUser);
+
+      sinon
+        .stub(User, 'deleteOne')
+        .resolves();
+    });
+
+    after(() => {
+      (User.findOne as sinon.SinonStub).restore();
+      (User.deleteOne as sinon.SinonStub).restore();
+    });
+
+    it('Status 204', async () => {
+      const response: Response = await chai
+        .request(app)
+        .delete(`${userRoute}/me`)
+        .set('Authorization', token);
+
+      expect(response.status).to.be.equal(HTTPCodes.SUCCESS_NO_CONTENT);
+    });
+  });
+
+  describe('Server Error', () => {
+    before(() => {
+      sinon
+        .stub(User, 'findOne')
+        .resolves(mockUser);
+
+      sinon
+        .stub(User, 'deleteOne')
+        .rejects();
+    });
+
+    after(() => {
+      (User.findOne as sinon.SinonStub).restore();
+      (User.deleteOne as sinon.SinonStub).restore();
+    });
+
+    it('Status 204', async () => {
+      const response: Response = await chai
+        .request(app)
+        .delete(`${userRoute}/me`)
+        .set('Authorization', token);
+
+      expect(response.status).to.be.equal(HTTPCodes.SERVER_ERROR);
+    });
+  });
+});

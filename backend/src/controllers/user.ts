@@ -12,6 +12,7 @@ class UserController {
     this._userService = userService;
 
     this.create = this.create.bind(this);
+    this.getById = this.getById.bind(this);
     this.deleteMe = this.deleteMe.bind(this);
     this.handleBytes = this.handleBytes.bind(this);
     this.addCategory = this.addCategory.bind(this);
@@ -21,6 +22,16 @@ class UserController {
     try {
       const { code, data } = await this._userService.create(req.body as IUser);
       res.status(code).json({ token: data });
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
+
+  public async getById(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { code, data } = await this._userService
+        .getById(req._id as ObjectId);
+      res.status(code).json(data);
     } catch (error: unknown) {
       next(error);
     }
@@ -37,14 +48,9 @@ class UserController {
   }
 
   public async handleBytes(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
-    const { operation, value } = req.params as unknown as HandleBytesParams;
     try {
       const { code } = await this._userService
-        .handleBytes(
-          req._id as ObjectId,
-          operation,
-          Number(value),
-        );
+        .handleBytes(req._id as ObjectId, req.body as HandleBytesParams);
       res.status(code).end();
     } catch (error: unknown) {
       next(error);
@@ -54,7 +60,7 @@ class UserController {
   public async addCategory(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const { code } = await this._userService
-        .addCategory(req._id as ObjectId, req.body.category);
+        .addCategory(req._id as ObjectId, req.body.category as string);
       res.status(code).end();
     } catch (error: unknown) {
       next(error);

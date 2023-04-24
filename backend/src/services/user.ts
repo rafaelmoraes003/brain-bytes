@@ -10,6 +10,7 @@ import createJWT from '../utils/createJWT';
 import ServiceResponse from '../interfaces/ServiceResponse';
 import validateObjectId from '../utils/validateObjectId';
 import availableExtraCategories from '../utils/availableExtraCategories';
+import HandleBytesParams from '../interfaces/HandleBytesParams';
 
 class UserService {
   private _userModel: Model<IUser>;
@@ -76,13 +77,18 @@ class UserService {
 
   public async handleBytes(
     _id: ObjectId,
-    operation: 'inc' | 'dec',
-    bytes: number,
+    payload: HandleBytesParams,
   ): Promise<ServiceResponse> {
+    const { operation, value } = payload;
+
+    if (!['inc', 'dec'].includes(operation)) {
+      throw new CustomError('unknown operation.', HTTPCodes.BAD_REQUEST);
+    }
+
     if (operation === 'inc') {
-      await this.incrementBytes(_id, bytes);
+      await this.incrementBytes(_id, value);
     } else {
-      await this.decrementBytes(_id, bytes);
+      await this.decrementBytes(_id, value);
     }
 
     return { code: HTTPCodes.SUCCESS_NO_CONTENT };

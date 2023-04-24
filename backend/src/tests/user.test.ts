@@ -2,18 +2,20 @@ import chai from 'chai';
 import sinon from 'sinon';
 import chaiHttp from 'chai-http';
 import { Response } from 'superagent';
+import { Document, Types } from 'mongoose';
 import { app } from '../app';
 import User from '../models/user';
 import HTTPCodes from '../enum/HTTPCodes';
-import mongoose from 'mongoose';
-import UserDocument from '../interfaces/UserDocument';
-import { userInDatabase } from './login.test';
+import userInDatabase from './login.test';
+import createdUsers from './mocks/createdUser';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
 const userRoute: string = '/user';
+
+
 
 describe('POST /user', () => {
   describe('Success', () => {
@@ -24,14 +26,7 @@ describe('POST /user', () => {
 
       sinon
         .stub(User, 'create')
-        .resolves({
-          username: 'yoshi',
-          password: '827ccb0eea8a706c4c34a16891f84e7b',
-          bytes: 10,
-          availableCategories: ['node.js', 'react', 'python'],
-          isAdmin: false,
-          _id: new mongoose.Types.ObjectId()
-        } as any);
+        .resolves(createdUsers);
     });
 
     after(() => {
@@ -44,7 +39,7 @@ describe('POST /user', () => {
         .request(app)
         .post(userRoute)
         .send({
-          username: 'rafael',
+          username: 'yoshi',
           password: '12345',
         });
 
@@ -92,5 +87,4 @@ describe('POST /user', () => {
       expect(response.body.error).to.be.equal('user already exists.');
     });
   });
-
 });

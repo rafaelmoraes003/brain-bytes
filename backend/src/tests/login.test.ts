@@ -2,12 +2,12 @@ import chai from 'chai';
 import sinon from 'sinon';
 import chaiHttp from 'chai-http';
 import { Response } from 'superagent';
+import mongoose from 'mongoose';
 import { app } from '../app';
 import User from '../models/user';
 import HTTPCodes from '../enum/HTTPCodes';
 import IUser from '../interfaces/IUser';
 import IUserMock from '../interfaces/IUserMock';
-import mongoose from 'mongoose';
 
 chai.use(chaiHttp);
 
@@ -20,6 +20,8 @@ export const userInDatabase: IUserMock = {
   username: 'rafael',
   password: '827ccb0eea8a706c4c34a16891f84e7b', // 12345
 };
+
+export default userInDatabase;
 
 describe('POST /login', () => {
   describe('Success', () => {

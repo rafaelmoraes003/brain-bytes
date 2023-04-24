@@ -88,7 +88,7 @@ describe('POST /user', () => {
   });
 });
 
-describe('GET users/me', () => {
+describe('GET user/me', () => {
   describe('Success', () => {
     before(() => {
       sinon
@@ -211,7 +211,7 @@ describe('DELETE /user/me', () => {
   });
 });
 
-describe('PATCH /bytes', () => {
+describe('PATCH /user/bytes', () => {
   describe('Increment', () => {
     before(() => {
       sinon
@@ -311,6 +311,43 @@ describe('PATCH /bytes', () => {
         });
 
       expect(response.status).to.be.equal(HTTPCodes.BAD_REQUEST);
+    });
+  });
+});
+
+describe('PATCH /user/category', () => {
+  describe('Success', () => {
+    before(() => {
+      sinon
+        .stub(User, 'updateOne')
+        .resolves();
+    });
+
+    after(() => {
+      (User.updateOne as sinon.SinonStub).restore();
+    });
+
+    it('Status 204', async () => {
+      const response: Response = await chai
+        .request(app)
+        .patch(`${userRoute}/category`)
+        .set('Authorization', token)
+        .send({ category: 'java' });
+
+      expect(response.status).to.be.equal(HTTPCodes.SUCCESS_NO_CONTENT);
+    });
+  });
+
+  describe('Invalid category', () => {
+    it('Status 400', async () => {
+      const response: Response = await chai
+        .request(app)
+        .patch(`${userRoute}/category`)
+        .set('Authorization', token)
+        .send({ category: 'ruby' });
+
+      expect(response.status).to.be.equal(HTTPCodes.BAD_REQUEST);
+      expect(response.body.error).to.be.equal('category is not available.');
     });
   });
 });

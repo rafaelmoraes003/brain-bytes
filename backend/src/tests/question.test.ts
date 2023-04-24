@@ -59,5 +59,53 @@ describe('GET /questions', () => {
       expect(response.body.error).to.be.equal('Error');
     });
   });
+});
+
+describe('GET /:category', () => {
+  describe('Success', () => {
+    const nodeJSQuestions: IQuestion[] = questions.filter((q) => q.category === 'node.js');
+
+    before(() => {
+      sinon
+        .stub(Question, 'aggregate')
+        .resolves(nodeJSQuestions);
+    });
+
+    after(() => {
+      (Question.aggregate as sinon.SinonStub).restore();
+    });
+
+    it('Status 200 with questions about category', async () => {
+      const response: Response = await chai
+        .request(app)
+        .get(`${questionsRoute}/node.js`)
+        .set('Authorization', adminToken);
+
+      expect(response.status).to.be.equal(HTTPCodes.OK);
+      expect(response.body).to.be.deep.equal(nodeJSQuestions);
+    });
+  });
+
+  describe('Server error', () => {
+    before(() => {
+      sinon
+        .stub(Question, 'aggregate')
+        .rejects();
+    });
+
+    after(() => {
+      (Question.aggregate as sinon.SinonStub).restore();
+    });
+
+    it('Status 500 with error message', async () => {
+      const response: Response = await chai
+        .request(app)
+        .get(`${questionsRoute}/node.js`)
+        .set('Authorization', adminToken);
+
+      expect(response.status).to.be.equal(HTTPCodes.SERVER_ERROR);
+      expect(response.body.error).to.be.equal('Error');
+    });
+  });
 
 });

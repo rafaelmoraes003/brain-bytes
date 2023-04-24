@@ -1,4 +1,4 @@
-import { Model, ObjectId } from 'mongoose';
+import { Model, ObjectId, UpdateWriteOpResult } from 'mongoose';
 import IUser from '../interfaces/IUser';
 import validateBody from '../utils/validateBody';
 import userSchema from '../validations/user';
@@ -60,7 +60,7 @@ class UserService {
   }
 
   public async decrementBytes(_id: ObjectId, bytes: number): Promise<void> {
-    const updatedUser = await this._userModel.updateOne(
+    const updatedUser: UpdateWriteOpResult = await this._userModel.updateOne(
       {
         _id,
         bytes: { $gte: bytes },

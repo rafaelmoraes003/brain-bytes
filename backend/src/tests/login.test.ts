@@ -6,6 +6,8 @@ import { app } from '../app';
 import User from '../models/user';
 import HTTPCodes from '../enum/HTTPCodes';
 import IUser from '../interfaces/IUser';
+import IUserMock from '../interfaces/IUserMock';
+import mongoose from 'mongoose';
 
 chai.use(chaiHttp);
 
@@ -13,14 +15,8 @@ const { expect } = chai;
 
 const loginRoute: string = '/login';
 
-interface IUserMock {
-  _id: string,
-  username: string,
-  password: string,
-}
-
-const userInDatabase: IUserMock = {
-  _id: '643d6e83426e597b3ab16c52',
+export const userInDatabase: IUserMock = {
+  _id: new mongoose.Types.ObjectId(),
   username: 'rafael',
   password: '827ccb0eea8a706c4c34a16891f84e7b', // 12345
 };

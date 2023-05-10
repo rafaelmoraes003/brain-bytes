@@ -6,6 +6,7 @@ import authenticationRequest from '../utils/authenticationRequest';
 import Input from './Input';
 import Button from './Button';
 import backgroundImage from '../assets/background.svg';
+import '../styles/authForm.css';
 
 interface AuthenticationFormProps {
   heading: string,
@@ -37,8 +38,10 @@ function AuthenticationForm({
 
   const handleSubmit = async (): Promise<void> => {
     const route: string = `http://localhost:3001${endpoint}`;
-    authenticationRequest(route, { username, password });
-    navigate('/home');
+    const request = await authenticationRequest(route, { username, password });
+    if (request) {
+      navigate('/home');
+    }
   };
 
   const enableButton = (): boolean => {
@@ -48,8 +51,8 @@ function AuthenticationForm({
   };
 
   return (
-    <Form>
-      <div className="user-form-container">
+    <div className="auth-form-container">
+      <Form>
         <h1>{heading}</h1>
         <h3>{subHeading}</h3>
 
@@ -77,9 +80,9 @@ function AuthenticationForm({
         />
 
         <Link to={linkedRoute}>{linkedRouteText}</Link>
-      </div>
+      </Form>
       <img src={backgroundImage} alt="background" />
-    </Form>
+    </div>
   );
 }
 

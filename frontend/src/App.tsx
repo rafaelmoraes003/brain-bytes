@@ -7,10 +7,11 @@ import CreateAccount from './pages/CreateAccount';
 import Settings from './pages/Settings';
 import Home from './pages/Home';
 import Store from './pages/Store';
+import './styles/index.css';
 
 function App(): JSX.Element {
   return (
-    <>
+    <div className="App">
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
@@ -20,7 +21,7 @@ function App(): JSX.Element {
         <Route path="/store" element={<Store />} />
       </Routes>
       <ToastContainer />
-    </>
+    </div>
   );
 }
 

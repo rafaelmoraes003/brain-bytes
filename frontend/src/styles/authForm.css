@@ -1,0 +1,97 @@
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #093545;
+  height: 100vh;
+}
+
+.auth-form-container img {
+  align-self: stretch;
+}
+
+.auth-form-container form {
+  position: relative;
+  top: 18vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-form-container form h1 {
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  margin: 0 auto;
+  color: #FFFFFF;
+  margin-top: 0;
+}
+
+.auth-form-container form h3 {
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #FFFFFF;
+  margin-top: 10px;
+}
+
+.auth-form-container form input,
+.auth-form-container form input:focus {
+  width: 300px;
+  height: 45px;
+  left: 490px;
+  margin-top: 32px;
+  background-color: #224957;
+  border-radius: 10px;
+  border: none;
+  font-family: 'Lexend Deca', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #FFFFFF;
+  outline: none;
+}
+
+.auth-form-container form input::placeholder {
+  position: relative;
+  left: 13px;
+  min-width: 41px;
+  height: 20px;
+  color: #FFFFFF;
+}
+
+.auth-form-container form button {
+  width: 300px;
+  height: 45px;
+  margin-top: 32px;
+  background: #20DF7F;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  font-family: 'Lexend Deca', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: black;
+  border: none;
+}
+
+.auth-form-container form button:disabled {
+  background: #01753b;
+  color: white
+}
+
+.auth-form-container form a {
+  color: white;
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 15px;
+  text-decoration: none;
+}

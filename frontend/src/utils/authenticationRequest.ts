@@ -13,7 +13,7 @@ interface AuthenticationServerResponse {
 const authenticationRequest = async (
   route: string,
   body: UserBody,
-): Promise<void> => {
+): Promise<boolean> => {
   try {
     const response: Response = await fetch(route, {
       method: 'POST',
@@ -28,8 +28,10 @@ const authenticationRequest = async (
     }
 
     localStorage.setItem('token', data.token as string);
+    return true;
   } catch (error) {
     getToast('error', (error as Error).message);
+    return false;
   }
 };
 

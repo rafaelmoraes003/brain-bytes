@@ -19,3 +19,5 @@ export class User implements UserDTO {
   @Prop({ required: true, default: false })
   isAdmin: boolean;
 }
+
+export type UserDocument = HydratedDocument<User>;

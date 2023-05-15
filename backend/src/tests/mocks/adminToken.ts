@@ -1,3 +1,0 @@
-const adminToken: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDNkNmU4MzQyNmU1OTdiM2FiMTZjNTIiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2ODIzNTc5OTR9.b7VqKhR-4vh3BuQia3AeJGt8CyDU60VWBTCX6fxsB-4';
-
-export default adminToken;

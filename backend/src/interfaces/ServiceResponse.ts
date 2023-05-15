@@ -1,8 +1,3 @@
-import HTTPCodes from '../enum/HTTPCodes';
-
-interface ServiceResponse<T = undefined> {
-  code: HTTPCodes,
-  data?: T,
+export interface ServiceResponse<T> {
+  data: T,
 }
-
-export default ServiceResponse;

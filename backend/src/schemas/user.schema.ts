@@ -1,0 +1,34 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+
+interface UserDTO {
+  username: string,
+  password: string,
+  bytes: number,
+  availableCategories: string[],
+  isAdmin: boolean,
+}
+
+@Schema()
+export class User implements UserDTO {
+  @Prop({ required: true })
+    username: string;
+
+  @Prop({ required: true })
+    password: string;
+
+  @Prop({ required: true, default: 10 })
+    bytes: number;
+
+  @Prop({ required: true, default: ['node.js', 'python', 'java'] })
+    availableCategories: string[];
+
+  @Prop({ required: true, default: false })
+    isAdmin: boolean;
+}
+
+export type UserDocument = HydratedDocument<User>;
+
+export const UserSchema: mongoose.Schema<User> = SchemaFactory
+  .createForClass(User)
+  .set('versionKey', false);

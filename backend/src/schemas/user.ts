@@ -5,19 +5,19 @@ import { UserDTO } from '../interfaces/UserDTO';
 @Schema()
 export class User implements UserDTO {
   @Prop({ required: true })
-  username: string;
+    username: string;
 
   @Prop({ required: true })
-  password: string;
+    password: string;
 
   @Prop({ required: true, default: 10 })
-  bytes: number;
+    bytes: number;
 
   @Prop({ required: true, default: ['node.js', 'python', 'java'] })
-  availableCategories: string[];
+    availableCategories: string[];
 
   @Prop({ required: true, default: false })
-  isAdmin: boolean;
+    isAdmin: boolean;
 }
 
 export type UserDocument = HydratedDocument<User>;

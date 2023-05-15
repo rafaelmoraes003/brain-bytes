@@ -21,3 +21,7 @@ export class User implements UserDTO {
 }
 
 export type UserDocument = HydratedDocument<User>;
+
+export const UserSchema: mongoose.Schema<User> = SchemaFactory
+  .createForClass(User)
+  .set('versionKey', false);

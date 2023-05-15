@@ -10,4 +10,6 @@ export class UserService {
   constructor(@InjectModel(User.name) userModel: Model<UserDocument>) {
     this.userModel = userModel;
   }
+
+
 }

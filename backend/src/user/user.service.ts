@@ -44,4 +44,9 @@ export class UserService {
 
     return { data: user };
   }
+
+  public async delete(_id: Types.ObjectId): Promise<void> {
+    await this.getById(_id);
+    await this.userModel.deleteOne({ _id });
+  }
 }

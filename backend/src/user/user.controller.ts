@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { User } from '../schemas/user';
 import { UserService } from './user.service';
+import { ExtraCategories } from 'src/types/ExtraCategories';
 
 @Controller('user')
 export class UserController {
@@ -18,6 +19,16 @@ export class UserController {
     return data;
   }
 
+  @Patch(':_id/:category')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async addCategory(
+    @Param('_id') _id: Types.ObjectId,
+    @Param('category') category: ExtraCategories
+  ) {
+    await this.userService.addCategory(_id, category);
+    return
+  }
+
   @Get(':_id')
   @HttpCode(HttpStatus.OK)
   public async getById(@Param('_id') _id: Types.ObjectId) {
@@ -30,4 +41,5 @@ export class UserController {
   public async delete(@Param('_id') _id: Types.ObjectId) {
     await this.userService.delete(_id);
   }
+
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from 'src/schemas/user';
 import { Types } from 'mongoose';
@@ -23,5 +23,11 @@ export class UserController {
   public async getById(@Param('_id') _id: Types.ObjectId) {
     const { data } = await this.userService.getById(_id);
     return data;
+  }
+
+  @Delete(':_id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param('_id') _id: Types.ObjectId) {
+    await this.userService.delete(_id);
   }
 }

@@ -1,10 +1,11 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ServiceResponse } from '../interfaces/ServiceResponse';
 import { User, UserDocument } from '../schemas/user';
 import { Utils } from '../utils/utils';
 import { userSchema } from '../validations/userSchema';
+import { ExtraCategories } from 'src/types/ExtraCategories';
 
 @Injectable()
 export class UserService {
@@ -48,5 +49,19 @@ export class UserService {
   public async delete(_id: Types.ObjectId): Promise<void> {
     await this.getById(_id);
     await this.userModel.deleteOne({ _id });
+  }
+
+  public async addCategory(
+    _id: Types.ObjectId,
+    category: ExtraCategories,
+  ): Promise<void> {
+    Utils.validateObjectId(_id);
+    Utils.validateCategory(category);
+    await this.getById(_id);
+
+    await this.userModel.updateOne(
+      { _id },
+      { $addToSet: { availableCategories: category } },
+    );
   }
 }

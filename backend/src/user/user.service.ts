@@ -1,6 +1,6 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ServiceResponse } from 'src/interfaces/ServiceResponse';
 import { User, UserDocument } from 'src/schemas/user';
 import { Utils } from 'src/utils/utils';
@@ -31,5 +31,17 @@ export class UserService {
       .create({ username, password: encryptedPassword });
 
     return { data: newUser };
+  }
+
+  public async getById(_id: Types.ObjectId): Promise<ServiceResponse<UserDocument>> {
+    Utils.validateObjectId(_id);
+
+    const user: UserDocument | null = await this.userModel.findById(_id, { _id: 0 });
+
+    if (!user) {
+      throw new NotFoundException('user not found.');
+    }
+
+    return { data: user };
   }
 }

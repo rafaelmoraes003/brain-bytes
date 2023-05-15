@@ -19,7 +19,7 @@ export class UserController {
     return data;
   }
 
-  @Patch(':_id/:category')
+  @Patch(':_id/category/:category')
   @HttpCode(HttpStatus.NO_CONTENT)
   public async addCategory(
     @Param('_id') _id: Types.ObjectId,

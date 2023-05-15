@@ -2,7 +2,7 @@ import { UnprocessableEntityException } from '@nestjs/common';
 import md5 from 'md5';
 import { SafeParseReturnType, ZodType } from 'zod';
 
-class Utils {
+export class Utils {
   public static getHash(string: string): string {
     const hash: string = md5(string);
     return hash;

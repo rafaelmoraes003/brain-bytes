@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
-import { UserService } from './user.service';
-import { User } from 'src/schemas/user';
 import { Types } from 'mongoose';
+import { User } from '../schemas/user';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  private userService: UserService
+  private userService: UserService;
 
   constructor(userService: UserService) {
     this.userService = userService;

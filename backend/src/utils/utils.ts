@@ -1,9 +1,15 @@
-import { BadRequestException, UnprocessableEntityException } from '@nestjs/common';
+import { BadRequestException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import md5 from 'md5';
 import { isValidObjectId } from 'mongoose';
+import { ExtraCategories } from 'src/types/ExtraCategories';
 import { SafeParseReturnType, ZodType } from 'zod';
 
 export class Utils {
+  private static extraCategories: ExtraCategories[] = [
+    'react',
+    'golang',
+  ];
+
   public static getHash(string: string): string {
     const hash: string = md5(string);
     return hash;
@@ -22,7 +28,13 @@ export class Utils {
 
   public static validateObjectId(_id: unknown): void {
     if (!isValidObjectId(_id)) {
-      throw new BadRequestException('id must have 24 hexadecimal characters.');
+      throw new BadRequestException('invalid object id.');
+    }
+  }
+
+  public static validateCategory(category: ExtraCategories): void {
+    if (!Utils.extraCategories.includes(category)) {
+      throw new UnauthorizedException('unavailable category.');
     }
   }
 }

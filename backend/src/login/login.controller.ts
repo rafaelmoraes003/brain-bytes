@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { LoginService } from './login.service';
-import { User } from 'src/schemas/user';
+import { User } from '../schemas/user';
 
 @Controller('login')
 export class LoginController {

@@ -1,11 +1,11 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import { ExtraCategories } from '../types/ExtraCategories';
 import { ServiceResponse } from '../interfaces/ServiceResponse';
 import { User, UserDocument } from '../schemas/user';
 import { Utils } from '../utils/utils';
 import { userSchema } from '../validations/userSchema';
-import { ExtraCategories } from 'src/types/ExtraCategories';
 
 @Injectable()
 export class UserService {

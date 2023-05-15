@@ -1,8 +1,8 @@
 import { BadRequestException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import md5 from 'md5';
 import { isValidObjectId } from 'mongoose';
-import { ExtraCategories } from 'src/types/ExtraCategories';
 import { SafeParseReturnType, ZodType } from 'zod';
+import { ExtraCategories } from '../types/ExtraCategories';
 
 export class Utils {
   private static extraCategories: ExtraCategories[] = [

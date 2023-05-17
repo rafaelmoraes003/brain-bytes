@@ -2,10 +2,13 @@ import { BadRequestException, UnauthorizedException, UnprocessableEntityExceptio
 import md5 from 'md5';
 import { isValidObjectId } from 'mongoose';
 import { SafeParseReturnType, ZodType } from 'zod';
-import { ExtraCategories } from '../types/ExtraCategories';
+import { Categories } from '../types/Categories';
 
 export class Utils {
-  private static extraCategories: ExtraCategories[] = [
+  private static categories: Categories[] = [
+    'node.js',
+    'java',
+    'python',
     'react',
     'golang',
   ];
@@ -37,8 +40,8 @@ export class Utils {
     }
   }
 
-  public static validateCategory(category: ExtraCategories): void {
-    if (!Utils.extraCategories.includes(category)) {
+  public static validateCategory(category: Categories): void {
+    if (!Utils.categories.includes(category)) {
       throw new UnauthorizedException('unavailable category.');
     }
   }

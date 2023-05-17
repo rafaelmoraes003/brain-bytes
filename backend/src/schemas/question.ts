@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { QuestionDTO } from '../interfaces/QuestionDTO';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { QuestionDTO } from '../interfaces/QuestionDTO';
 
 @Schema()
 export class Question implements QuestionDTO {

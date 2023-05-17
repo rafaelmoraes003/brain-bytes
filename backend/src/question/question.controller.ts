@@ -3,7 +3,7 @@ import { QuestionService } from './question.service';
 
 @Controller('question')
 export class QuestionController {
-  private questionService: QuestionService
+  private questionService: QuestionService;
 
   constructor(questionService: QuestionService) {
     this.questionService = questionService;

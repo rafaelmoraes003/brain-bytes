@@ -71,4 +71,15 @@ export class UserService {
       { $inc: { bytes } }
     );
   }
+
+  private async decrementeBytes(_id: Types.ObjectId, bytes: number) {
+    const { modifiedCount } = await this.userModel.updateOne(
+      { _id, bytes: { $gte: bytes } },
+      { $inc: { bytes: -bytes } }
+    );
+
+    if (!modifiedCount) {
+      throw new ForbiddenException('you do not have enough bytes.');
+    }
+  }
 }

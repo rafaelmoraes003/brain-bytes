@@ -2,9 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Question, QuestionDocument } from '../schemas/question';
-import { Utils } from 'src/utils/utils';
-import { questionSchema } from 'src/validations/questionSchema';
-import { ServiceResponse } from 'src/interfaces/ServiceResponse';
+import { Utils } from '../utils/utils';
+import { questionSchema } from '../validations/questionSchema';
+import { ServiceResponse } from '../interfaces/ServiceResponse';
+import { Categories } from '../types/Categories';
 
 @Injectable()
 export class QuestionService {
@@ -18,5 +19,16 @@ export class QuestionService {
     Utils.validateBody(questionSchema, question);
     const newQuestion: QuestionDocument = await this.questionModel.create(question);
     return { data: newQuestion };
+  }
+
+  public async getFiveQuestionsFromCategory(
+    category: Categories,
+  ): Promise<ServiceResponse<QuestionDocument[]>> {
+    Utils.validateCategory(category);
+    const questions: QuestionDocument[] = await this.questionModel.aggregate([
+      { $match: { category } },
+      { $sample: { size: 5 } },
+    ]);
+    return { data: questions };
   }
 }

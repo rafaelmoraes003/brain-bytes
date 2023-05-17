@@ -13,7 +13,7 @@ export class UserController {
   }
 
   @Post()
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.CREATED)
   public async create(@Body() user: User) {
     const { data } = await this.userService.create(user);
     return data;

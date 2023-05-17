@@ -65,6 +65,21 @@ export class UserService {
     );
   }
 
+  public async handleBytes(
+    _id: Types.ObjectId,
+    operation: string,
+    bytes: number
+  ): Promise<void> {
+    Utils.validateOperation(operation);
+    await this.getById(_id);
+
+    if (operation === 'inc') {
+      await this.incrementeBytes(_id, bytes);
+    } else {
+      await this.decrementeBytes(_id, bytes);
+    }
+  }
+
   private async incrementeBytes(_id: Types.ObjectId, bytes: number): Promise<void> {
     await this.userModel.updateOne(
       { _id },

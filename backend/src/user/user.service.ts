@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ExtraCategories } from '../types/ExtraCategories';
@@ -62,6 +62,13 @@ export class UserService {
     await this.userModel.updateOne(
       { _id },
       { $addToSet: { availableCategories: category } },
+    );
+  }
+
+  private async incrementeBytes(_id: Types.ObjectId, bytes: number): Promise<void> {
+    await this.userModel.updateOne(
+      { _id },
+      { $inc: { bytes } }
     );
   }
 }

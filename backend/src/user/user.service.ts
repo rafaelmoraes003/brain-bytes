@@ -87,7 +87,7 @@ export class UserService {
     );
   }
 
-  private async decrementeBytes(_id: Types.ObjectId, bytes: number) {
+  private async decrementeBytes(_id: Types.ObjectId, bytes: number): Promise<void> {
     const { modifiedCount } = await this.userModel.updateOne(
       { _id, bytes: { $gte: bytes } },
       { $inc: { bytes: -bytes } }

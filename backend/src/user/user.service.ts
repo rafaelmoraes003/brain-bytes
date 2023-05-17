@@ -68,7 +68,7 @@ export class UserService {
   public async handleBytes(
     _id: Types.ObjectId,
     operation: string,
-    bytes: number
+    bytes: number,
   ): Promise<void> {
     Utils.validateOperation(operation);
     await this.getById(_id);
@@ -83,14 +83,14 @@ export class UserService {
   private async incrementeBytes(_id: Types.ObjectId, bytes: number): Promise<void> {
     await this.userModel.updateOne(
       { _id },
-      { $inc: { bytes } }
+      { $inc: { bytes } },
     );
   }
 
   private async decrementeBytes(_id: Types.ObjectId, bytes: number): Promise<void> {
     const { modifiedCount } = await this.userModel.updateOne(
       { _id, bytes: { $gte: bytes } },
-      { $inc: { bytes: -bytes } }
+      { $inc: { bytes: -bytes } },
     );
 
     if (!modifiedCount) {

@@ -26,6 +26,18 @@ export class UserController {
     @Param('category') category: ExtraCategories,
   ) {
     await this.userService.addCategory(_id, category);
+    return;
+  }
+
+  @Patch(':_id/bytes/:operation/:bytes')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async handleBytes(
+    @Param('_id') _id: Types.ObjectId,
+    @Param('operation') operation: string,
+    @Param('bytes') bytes: number,
+  ) {
+    await this.userService.handleBytes(_id, operation, bytes);
+    return;
   }
 
   @Get(':_id')
@@ -39,5 +51,6 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param('_id') _id: Types.ObjectId) {
     await this.userService.delete(_id);
+    return;
   }
 }

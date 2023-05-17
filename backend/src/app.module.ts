@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoginModule } from './login/login.module';
 import { UserModule } from './user/user.module';
+import { QuestionModule } from './question/question.module';
 import 'dotenv/config';
 
 @Module({
@@ -11,6 +12,7 @@ import 'dotenv/config';
     MongooseModule.forRoot(process.env.MONGODB_URI as string),
     LoginModule,
     UserModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

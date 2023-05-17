@@ -10,6 +10,11 @@ export class Utils {
     'golang',
   ];
 
+  private static availableOperations: string[] = [
+    'inc',
+    'dec',
+  ];
+
   public static getHash(string: string): string {
     const hash: string = md5(string);
     return hash;
@@ -35,6 +40,12 @@ export class Utils {
   public static validateCategory(category: ExtraCategories): void {
     if (!Utils.extraCategories.includes(category)) {
       throw new UnauthorizedException('unavailable category.');
+    }
+  }
+
+  public static validateOperation(operation: string): void {
+    if (!Utils.availableOperations.includes(operation)) {
+      throw new UnauthorizedException('invalid operation.');
     }
   }
 }

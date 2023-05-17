@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common';
+import { Question } from '../schemas/question';
+import { Categories } from '../types/Categories';
 import { QuestionService } from './question.service';
-import { Question } from 'src/schemas/question';
-import { Categories } from 'src/types/Categories';
 
 @Controller('question')
 export class QuestionController {

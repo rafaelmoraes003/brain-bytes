@@ -5,16 +5,16 @@ import { QuestionDTO } from '../interfaces/QuestionDTO';
 @Schema()
 export class Question implements QuestionDTO {
   @Prop({ required: true })
-  question: string;
+    question: string;
 
   @Prop({ required: true })
-  correctAnswer: string;
+    correctAnswer: string;
 
   @Prop({ required: true })
-  incorrectAnswers: string[];
+    incorrectAnswers: string[];
 
   @Prop({ required: true })
-  category: string;
+    category: string;
 }
 
 export type QuestionDocument = HydratedDocument<Question>;

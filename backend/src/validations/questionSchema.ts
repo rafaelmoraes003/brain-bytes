@@ -1,5 +1,5 @@
-import { Question } from 'src/schemas/question';
 import { ZodType, z } from 'zod';
+import { Question } from '../schemas/question';
 
 export const questionSchema: ZodType<Question> = z.object({
   question: z.string().min(3),

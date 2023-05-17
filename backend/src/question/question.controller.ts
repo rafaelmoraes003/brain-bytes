@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
 import { Question } from '../schemas/question';
 import { Categories } from '../types/Categories';
 import { QuestionService } from './question.service';
@@ -11,6 +11,8 @@ export class QuestionController {
     this.questionService = questionService;
   }
 
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
   public async create(@Body() question: Question) {
     const { data } = await this.questionService.create(question);
     return data;

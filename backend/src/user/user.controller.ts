@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { Types } from 'mongoose';
-import { ExtraCategories } from '../types/ExtraCategories';
+import { Categories } from '../types/Categories';
 import { User } from '../schemas/user';
 import { UserService } from './user.service';
 
@@ -23,7 +23,7 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   public async addCategory(
     @Param('_id') _id: Types.ObjectId,
-    @Param('category') category: ExtraCategories,
+    @Param('category') category: Categories,
   ) {
     await this.userService.addCategory(_id, category);
     return;

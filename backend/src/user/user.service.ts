@@ -1,7 +1,7 @@
 import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { ExtraCategories } from '../types/ExtraCategories';
+import { Categories } from '../types/Categories';
 import { ServiceResponse } from '../interfaces/ServiceResponse';
 import { User, UserDocument } from '../schemas/user';
 import { Utils } from '../utils/utils';
@@ -53,7 +53,7 @@ export class UserService {
 
   public async addCategory(
     _id: Types.ObjectId,
-    category: ExtraCategories,
+    category: Categories,
   ): Promise<void> {
     Utils.validateObjectId(_id);
     Utils.validateCategory(category);

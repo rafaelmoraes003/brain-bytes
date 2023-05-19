@@ -6,8 +6,8 @@ interface UserBody {
 }
 
 interface AuthenticationServerResponse {
-  token?: string,
-  error?: string,
+  _id?: string,
+  message?: string,
 }
 
 const authenticationRequest = async (
@@ -24,10 +24,10 @@ const authenticationRequest = async (
     const data: AuthenticationServerResponse = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.error);
+      throw new Error(data.message);
     }
 
-    localStorage.setItem('token', data.token as string);
+    localStorage.setItem('id', data._id as string);
     return true;
   } catch (error) {
     getToast('error', (error as Error).message);

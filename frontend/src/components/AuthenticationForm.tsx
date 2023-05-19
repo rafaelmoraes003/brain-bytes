@@ -45,9 +45,8 @@ function AuthenticationForm({
   };
 
   const enableButton = (): boolean => {
-    const MIN_PASSWORD_LENGTH: number = 3;
-    const regex: RegExp = /^[a-z0-9._]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-    return !(regex.test(username) && password.length >= MIN_PASSWORD_LENGTH);
+    const MIN_LENGTH: number = 6;
+    return !(username.length >= MIN_LENGTH && password.length >= MIN_LENGTH);
   };
 
   return (
